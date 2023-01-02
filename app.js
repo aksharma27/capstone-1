@@ -1,11 +1,18 @@
 const express = require('express');
 const dotenv = require('dotenv');
-dotenv.config = ({path: "./config.env"});
+require('dotenv').config({path: 'config.env'});
 const PORT = process.env.PORT || 3000;
-const DB = process.env.DB;
+const dbconn = require('./config/db');
 
 
 const app = express();
+
+app.use(express.json());
+dbconn();
+
+app.get('/health', (req, res)=>{
+    req.send("Health Api setup");
+});
 
 
 
